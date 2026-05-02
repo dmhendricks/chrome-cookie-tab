@@ -1,23 +1,24 @@
 {
    "background": {
-      "page": "background.html"
+      "service_worker": "background.js"
    },
-   "content_security_policy": "default-src 'self'; connect-src http: https:; script-src 'self' 'unsafe-eval' https://chrome-devtools-frontend.appspot.com; img-src 'self' data:; style-src 'self' 'unsafe-inline'; frame-src 'self' about: ",
    "devtools_page": "devtools-page.html",
    "description": "Missing cookie manager for Google Chrome. Edit and create cookies right in the Developer Tools.",
    "homepage_url": "http://www.bigbadgoose.com/cookie-inspector",
    "icons": {
       "128": "store-icon-128.png"
    },
-   "manifest_version": 2,
-   "minimum_chrome_version": "19.0",
+   "manifest_version": 3,
+   "minimum_chrome_version": "88",
    "name": "Cookie Inspector",
    "permissions": [
      "cookies",
-     "*://*/",
      "tabs",
      "unlimitedStorage",
-     "webNavigation",
+     "webNavigation"
+   ],
+   "host_permissions": [
+     "*://*/*",
      "http://*/*",
      "https://*/*"
    ],
