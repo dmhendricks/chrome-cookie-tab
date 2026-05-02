@@ -2,6 +2,7 @@ import { copyFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 import { crx } from '@crxjs/vite-plugin';
+import preact from '@preact/preset-vite';
 import manifest from './src/manifest.json' with { type: 'json' };
 
 const copyLicense = {
@@ -13,7 +14,7 @@ const copyLicense = {
 };
 
 export default defineConfig({
-  plugins: [crx({ manifest }), copyLicense],
+  plugins: [preact(), crx({ manifest }), copyLicense],
   build: {
     outDir: 'dist',
     emptyOutDir: true,

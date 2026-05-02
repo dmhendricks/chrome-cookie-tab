@@ -330,6 +330,48 @@ table {
   outline-width: 0;
 }
 
+.copy-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.copy-cell .cell-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.copy-cell .copy-affordance {
+  visibility: hidden;
+  cursor: pointer;
+  font-size: 11px;
+  line-height: 1;
+  padding: 0 2px;
+  color: #666;
+  user-select: none;
+  flex: 0 0 auto;
+}
+
+#content table tr.cookie-row:hover .copy-affordance {
+  visibility: visible;
+}
+
+.copy-cell .copy-affordance:hover {
+  color: rgb(56, 121, 217);
+}
+
+.darkTheme .copy-cell .copy-affordance {
+  color: #888;
+}
+
+.darkTheme .copy-cell .copy-affordance:hover {
+  color: #6CA0F6;
+}
+
 .label {
   text-align: right;
   vertical-align: top;

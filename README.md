@@ -1,7 +1,7 @@
 # Cookie Tab in DevTools
 
 A cookie manager for Google Chrome. Edit and create cookies right
-in the Developer Tools. Forked from [westoque/cookie_inspector](https://github.com/westoque/cookie_inspector). Now with proper dark mode support.
+in the Developer Tools. Forked from [westoque/cookie_inspector](https://github.com/westoque/cookie_inspector). Now with proper dark mode support!
 
 ![Cookie Tab in DevTools Screenshot](store/screenshot-1280x800-01.png)
 
