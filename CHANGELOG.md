@@ -1,5 +1,9 @@
 # Cookie Tab in DevTools Changelog
 
+### Master
+
+- Improve dark mode style for edit form
+
 ### Release 2.2.0
 
 - Rewrite the DevTools panel UI in Preact + JSX, replacing Backbone, jQuery, Underscore, Mustache, and Hogan. Delete `lib/`.
