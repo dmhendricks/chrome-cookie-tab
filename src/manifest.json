@@ -4,7 +4,7 @@
       "type": "module"
    },
    "devtools_page": "src/devtools/devtools-page.html",
-   "description": "Missing cookie manager for Google Chrome. Edit and create cookies right in the Developer Tools.",
+   "description": "Add a tab to DevTools for easy cookies management",
    "homepage_url": "https://github.com/dmhendricks/chrome-cookie-tab",
    "icons": {
       "128": "store-icon-128.png"
