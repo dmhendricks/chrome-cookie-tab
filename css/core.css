@@ -5,6 +5,11 @@ body {
   font-size: 11px;
 }
 
+body.darkTheme {
+  background: #282828;
+  color: #C0C9D3;
+}
+
 a {
   font-family: 'Lucida Grande', sans-serif;
 }
@@ -124,6 +129,14 @@ table {
     border-color: #3E3E3E;
 }
 
+.darkTheme #content table td div.link {
+    color: #6CA0F6;
+}
+
+.darkTheme #content table td div.green {
+    color: #6FCF6F;
+}
+
 #content table td div {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -155,7 +168,7 @@ table {
 }
 
 .darkTheme #content table tr.cookie-row:hover {
-  background: #482F0B;
+  background: #3B3B3B;
 }
 
 #content table tr.filler td {
