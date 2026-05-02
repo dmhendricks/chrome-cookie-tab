@@ -1,7 +1,7 @@
 import { copyFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
-import { crx } from '@crxjs/vite-plugin';
+import { crx, type ManifestV3Export } from '@crxjs/vite-plugin';
 import preact from '@preact/preset-vite';
 import manifest from './src/manifest.json' with { type: 'json' };
 
@@ -14,7 +14,7 @@ const copyLicense = {
 };
 
 export default defineConfig({
-  plugins: [preact(), crx({ manifest }), copyLicense],
+  plugins: [preact(), crx({ manifest: manifest as unknown as ManifestV3Export }), copyLicense],
   build: {
     outDir: 'dist',
     emptyOutDir: true,
