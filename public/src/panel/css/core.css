@@ -265,6 +265,7 @@ table {
   bottom: 0;
   overflow-y: scroll;
   overflow-x: hidden;
+  outline: none;
 }
 
 #context-menu-body {
@@ -301,6 +302,28 @@ table {
 .context-menu-item-separator {
   margin: 5px 1px 6px 1px;
   border-bottom: 1px solid rgb(227, 227, 227);
+}
+
+.darkTheme #context-menu-body {
+  background-color: #3C3C3C;
+  color: #E8E8E8;
+  border: 1px solid #5E5E5E;
+  -webkit-box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
+
+.darkTheme .context-menu-item {
+  color: #E8E8E8;
+}
+
+.darkTheme .context-menu-item:hover {
+  border-top: 1px solid rgb(56, 121, 217);
+  border-bottom: 1px solid rgb(56, 121, 217);
+  background-color: rgb(56, 121, 217);
+  color: white;
+}
+
+.darkTheme .context-menu-item-separator {
+  border-bottom: 1px solid #6A6A6A;
 }
 
 :focus {
