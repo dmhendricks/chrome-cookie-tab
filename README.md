@@ -34,31 +34,3 @@ npm run lint
 ```
 
 Load the extension in Chrome from `chrome://extensions` → **Load unpacked** → select `dist/`.
-
-## Design
-
-```
-  +--------+      +--------+      +-----------------+
-  | Panel  |<---->| Socket |<---->| Service Worker  |
-  +--------+      +--------+      +-----------------+
-```
-
-### Panel
-
-The DevTools panel UI. Currently a Backbone.js + jQuery + Mustache app
-(legacy, scheduled to be replaced with Preact + TypeScript — see
-[docs/modernization-plan.md](docs/modernization-plan.md)).
-
-### Socket
-
-An object that mediates between the panel and the service worker via a
-long-lived `chrome.runtime` port.
-
-### Service Worker
-
-`src/background.ts` (TypeScript). Handles cookie reads/writes via the
-`chrome.cookies` API and pushes updates back to the panel.
-
-## License
-
-MIT
