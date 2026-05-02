@@ -5,13 +5,13 @@
    },
    "devtools_page": "src/devtools/devtools-page.html",
    "description": "Missing cookie manager for Google Chrome. Edit and create cookies right in the Developer Tools.",
-   "homepage_url": "http://www.bigbadgoose.com/cookie-inspector",
+   "homepage_url": "https://github.com/dmhendricks/chrome-cookie-tab",
    "icons": {
       "128": "store-icon-128.png"
    },
    "manifest_version": 3,
    "minimum_chrome_version": "88",
-   "name": "Cookie Inspector",
+   "name": "Cookie Tab in DevTools",
    "permissions": [
      "cookies",
      "tabs",

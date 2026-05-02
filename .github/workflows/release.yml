@@ -66,13 +66,13 @@ jobs:
       - name: Zip dist/
         run: |
           cd dist
-          zip -r ../cookie-inspector.zip .
+          zip -r ../chrome-cookie-tab.zip .
 
       - name: Upload zip as workflow artifact
         uses: actions/upload-artifact@v7
         with:
-          name: cookie-inspector
-          path: cookie-inspector.zip
+          name: chrome-cookie-tab
+          path: chrome-cookie-tab.zip
           if-no-files-found: error
           retention-days: 14
 
@@ -87,7 +87,7 @@ jobs:
       - name: Download zip
         uses: actions/download-artifact@v8
         with:
-          name: cookie-inspector
+          name: chrome-cookie-tab
           path: dist
 
       - name: List downloaded artifacts
@@ -97,13 +97,13 @@ jobs:
         uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ github.event.inputs.tag || github.ref_name }}
-          name: Cookie Inspector ${{ github.event.inputs.tag || github.ref_name }}
+          name: Cookie Tab in DevTools ${{ github.event.inputs.tag || github.ref_name }}
           body: |
             ## Installation
 
-            1. Download `cookie-inspector.zip` below and unzip it.
+            1. Download `chrome-cookie-tab.zip` below and unzip it.
             2. Open `chrome://extensions`, turn on **Developer mode** (top-right).
             3. Click **Load unpacked** and select the unzipped folder.
           draft: true
-          files: dist/cookie-inspector.zip
+          files: dist/chrome-cookie-tab.zip
           fail_on_unmatched_files: true

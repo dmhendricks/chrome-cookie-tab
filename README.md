@@ -1,9 +1,9 @@
-# Cookie Inspector
+# Cookie Tab in DevTools
 
 A cookie manager for Google Chrome. Edit and create cookies right
 in the Developer Tools. Forked from [westoque/cookie_inspector](https://github.com/westoque/cookie_inspector). Now with proper dark mode support.
 
-![Cookie Inspector Screenshot](store/screenshot-1280x800-01.png)
+![Cookie Tab in DevTools Screenshot](store/screenshot-1280x800-01.png)
 
 Features:
 
@@ -13,7 +13,7 @@ Features:
 
 ## Installation
 
-1. Download `cookie-inspector.zip` from the [latest release](https://github.com/dmhendricks/cookie-inspector/releases/latest) and unzip it somewhere you'll remember.
+1. Download `chrome-cookie-tab.zip` from the [latest release](https://github.com/dmhendricks/chrome-cookie-tab/releases/latest) and unzip it somewhere you'll remember.
 2. Open Chrome and go to `chrome://extensions`.
 3. In the top-right corner, turn on **Developer mode**.
 4. Click **Load unpacked** and select the unzipped folder.

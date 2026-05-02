@@ -1,4 +1,4 @@
-# Cookie Inspector Changelog
+# Cookie Tab in DevTools Changelog
 
 ### Master
 
