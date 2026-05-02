@@ -42,7 +42,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit --no-fund
 
       # Sync manifest version with the tag so the published extension's
       # manifest.json matches the GitHub release. Strips the leading `v`.
