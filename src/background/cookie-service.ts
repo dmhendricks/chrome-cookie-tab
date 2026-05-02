@@ -1,0 +1,121 @@
+export type Cookie = chrome.cookies.Cookie;
+
+export interface CookieFormInput {
+  name?: string;
+  value?: string;
+  domain?: string;
+  path?: string;
+  secure?: boolean;
+  httpOnly?: boolean;
+  hostOnly?: boolean;
+  session?: boolean;
+  expirationDate?: number;
+  sameSite?: chrome.cookies.SameSiteStatus;
+  storeId?: string;
+}
+
+export interface UpdatePayload {
+  previousAttributes: Cookie & { id?: unknown; hostOnly?: boolean; session?: boolean };
+  changedAttributes: Partial<CookieFormInput>;
+}
+
+function urlForCookie(cookie: Pick<Cookie, 'domain' | 'path' | 'secure'>): string {
+  const protocol = cookie.secure ? 'https' : 'http';
+  const host = cookie.domain.startsWith('.') ? cookie.domain.slice(1) : cookie.domain;
+  return `${protocol}://${host}${cookie.path ?? '/'}`;
+}
+
+async function tabUrl(tabId: number): Promise<string> {
+  const tab = await chrome.tabs.get(tabId);
+  return tab.url ?? '';
+}
+
+export const CookieService = {
+  async list(tabId: number): Promise<Cookie[]> {
+    const url = await tabUrl(tabId);
+    if (!url) return [];
+    return chrome.cookies.getAll({ url });
+  },
+
+  async create(tabId: number, input: CookieFormInput): Promise<Cookie | null> {
+    const url = await tabUrl(tabId);
+    const details: chrome.cookies.SetDetails = {
+      url,
+      name: input.name,
+      value: input.value,
+      path: input.path,
+      secure: input.secure,
+      httpOnly: input.httpOnly,
+      sameSite: input.sameSite,
+      storeId: input.storeId,
+    };
+    if (!input.hostOnly) {
+      details.domain = input.domain;
+    }
+    if (!input.session && input.expirationDate !== undefined) {
+      details.expirationDate = input.expirationDate;
+    }
+    return chrome.cookies.set(details);
+  },
+
+  async delete(tabId: number, name: string): Promise<chrome.cookies.CookieDetails | null> {
+    const url = await tabUrl(tabId);
+    return chrome.cookies.remove({ url, name });
+  },
+
+  async removeAll(tabId: number): Promise<void> {
+    const url = await tabUrl(tabId);
+    if (!url) return;
+    const cookies = await chrome.cookies.getAll({ url });
+    await Promise.all(
+      cookies.map((c) =>
+        chrome.cookies.remove({ url: urlForCookie(c), name: c.name, storeId: c.storeId }),
+      ),
+    );
+  },
+
+  /**
+   * Merge previous + changed and re-set the cookie. Removes the prior cookie
+   * first so renames or domain/path changes don't leave a stale record.
+   * Preserves sameSite, storeId, and any other server-set attributes.
+   */
+  async update(tabId: number, payload: UpdatePayload): Promise<Cookie | null> {
+    const { previousAttributes: prev, changedAttributes: changed } = payload;
+    const tabUrlValue = await tabUrl(tabId);
+
+    const merged: Cookie & { hostOnly?: boolean; session?: boolean } = {
+      ...prev,
+      ...changed,
+    } as Cookie & { hostOnly?: boolean; session?: boolean };
+
+    const removeUrl = urlForCookie(prev);
+    await chrome.cookies.remove({
+      url: removeUrl,
+      name: prev.name,
+      storeId: prev.storeId,
+    });
+
+    const setDetails: chrome.cookies.SetDetails = {
+      url: tabUrlValue || urlForCookie(merged),
+      name: merged.name,
+      value: merged.value,
+      path: merged.path,
+      secure: merged.secure,
+      httpOnly: merged.httpOnly,
+      sameSite: merged.sameSite,
+      storeId: merged.storeId,
+    };
+
+    if (!merged.hostOnly) {
+      setDetails.domain = merged.domain;
+    }
+
+    if (merged.session) {
+      setDetails.expirationDate = undefined;
+    } else if (merged.expirationDate !== undefined) {
+      setDetails.expirationDate = merged.expirationDate;
+    }
+
+    return chrome.cookies.set(setDetails);
+  },
+};

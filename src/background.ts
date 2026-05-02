@@ -1,199 +1,98 @@
+import { CookieService, type CookieFormInput, type UpdatePayload } from './background/cookie-service';
+
 interface PortMessage {
   command: string;
   tabId: number;
-  data?: {
-    name?: string;
-    value?: string;
-    domain?: string;
-    path?: string;
-    secure?: boolean;
-    httpOnly?: boolean;
-    hostOnly?: boolean;
-    session?: boolean;
-    expirationDate?: number;
-    changedAttributes?: Record<string, unknown>;
-    previousAttributes?: Record<string, unknown>;
-  };
+  data?: CookieFormInput &
+    Partial<UpdatePayload> & {
+      // legacy: server-side ignored; preserved for forward-compat
+      [key: string]: unknown;
+    };
 }
 
-const listeners: Record<number, chrome.runtime.Port> = {};
+/**
+ * Map of tabId → connected devtools port. Lost when the SW suspends; that's
+ * fine — the panel reconnects and re-sends `saveListener` on resume.
+ */
+const ports = new Map<number, chrome.runtime.Port>();
 
-function onDOMContentLoaded(details: chrome.webNavigation.WebNavigationFramedCallbackDetails) {
-  if (details.frameId !== 0) {
-    return;
-  }
-
-  const tabId = details.tabId;
-  const port = listeners[tabId];
-  if (port) {
-    chrome.tabs.get(tabId, (tab) => {
-      chrome.cookies.getAll({ url: tab.url ?? '' }, (cookies) => {
-        port.postMessage({ command: 'cookies:read', data: { cookies } });
-      });
-    });
+function send(port: chrome.runtime.Port, command: string, data: unknown): void {
+  try {
+    port.postMessage({ command, data });
+  } catch {
+    // Port disconnected between request and response. The panel will reconnect.
   }
 }
 
-function onNavigate(details: chrome.webNavigation.WebNavigationBaseCallbackDetails) {
-  // `frameId` is on the runtime payload but not the base type; cast to read it.
-  const frameId = (details as { frameId?: number }).frameId;
-  if (frameId !== 0) {
-    return;
-  }
+async function handle(msg: PortMessage, port: chrome.runtime.Port): Promise<void> {
+  const { command, tabId } = msg;
 
-  const tabId = details.tabId;
-  const port = listeners[tabId];
-  if (port) {
-    port.postMessage({ command: 'navigate' });
-  }
-}
-
-function onPortMessageReceived(msg: PortMessage, port: chrome.runtime.Port) {
-  const tabId = msg.tabId;
-  const command = msg.command;
-
-  if (command === 'saveListener') {
-    listeners[tabId] = port;
-
-    port.onDisconnect.addListener(() => {
-      delete listeners[tabId];
-    });
-  }
-
-  if (command === 'removeAllCookies') {
-    chrome.tabs.get(tabId, (tab) => {
-      const url = tab.url ?? '';
-      chrome.cookies.getAll({ url }, (cookies) => {
-        for (let i = 0; i < cookies.length; i += 1) {
-          chrome.cookies.remove({ url, name: cookies[i]!.name });
-        }
-        port.postMessage({ command, data: { cookies: [] } });
+  switch (command) {
+    case 'saveListener': {
+      ports.set(tabId, port);
+      port.onDisconnect.addListener(() => {
+        if (ports.get(tabId) === port) ports.delete(tabId);
       });
-    });
-  }
+      return;
+    }
 
-  if (command === 'cookies:read') {
-    chrome.tabs.get(tabId, (tab) => {
-      chrome.cookies.getAll({ url: tab.url ?? '' }, (cookies) => {
-        port.postMessage({ command, data: { cookies } });
+    case 'cookies:read': {
+      const cookies = await CookieService.list(tabId);
+      send(port, command, { cookies });
+      return;
+    }
+
+    case 'cookies:create': {
+      const cookie = await CookieService.create(tabId, msg.data ?? {});
+      send(port, command, cookie);
+      return;
+    }
+
+    case 'cookies:delete': {
+      await CookieService.delete(tabId, msg.data?.name ?? '');
+      send(port, command, msg.data);
+      return;
+    }
+
+    case 'cookies:update': {
+      const data = msg.data;
+      if (!data?.previousAttributes || !data.changedAttributes) return;
+      const cookie = await CookieService.update(tabId, {
+        previousAttributes: data.previousAttributes,
+        changedAttributes: data.changedAttributes,
       });
-    });
-  }
+      const enriched = cookie
+        ? { ...cookie, id: (data.previousAttributes as { id?: unknown }).id }
+        : null;
+      send(port, command, enriched);
+      return;
+    }
 
-  if (command === 'cookies:create') {
-    const data = msg.data!;
-
-    chrome.tabs.get(tabId, (tab) => {
-      const details: chrome.cookies.SetDetails = {
-        url: tab.url ?? '',
-        name: data.name,
-        value: data.value,
-        path: data.path,
-        secure: data.secure,
-        httpOnly: data.httpOnly,
-      };
-
-      if (!data.hostOnly) {
-        details.domain = data.domain;
-      }
-      if (!data.session) {
-        details.expirationDate = data.expirationDate;
-      }
-
-      chrome.cookies.set(details, (cookie) => {
-        port.postMessage({ command, data: cookie });
-      });
-    });
-  }
-
-  if (command === 'cookies:delete') {
-    const data = msg.data!;
-
-    chrome.tabs.get(tabId, (tab) => {
-      const details = {
-        url: tab.url ?? '',
-        name: data.name!,
-      };
-
-      chrome.cookies.remove(details, (cookie) => {
-        port.postMessage({ command, data: cookie });
-      });
-    });
-  }
-
-  if (command === 'cookies:update') {
-    const changedAttributes = msg.data?.changedAttributes as Record<string, unknown> | undefined;
-    const previousAttributes = msg.data?.previousAttributes as Record<string, unknown> | undefined;
-
-    if (changedAttributes && previousAttributes) {
-      chrome.tabs.get(tabId, (tab) => {
-        const url = tab.url ?? '';
-        chrome.cookies.remove({ url, name: previousAttributes.name as string }, () => {
-          const details: chrome.cookies.SetDetails = {
-            url,
-            name: (changedAttributes.name as string) || (previousAttributes.name as string),
-            value: (changedAttributes.value as string) || (previousAttributes.value as string),
-            path: (changedAttributes.path as string) || (previousAttributes.path as string),
-          };
-
-          // `secure` attribute
-          if (changedAttributes.secure === undefined) {
-            details.secure = previousAttributes.secure as boolean;
-          } else {
-            details.secure = changedAttributes.secure as boolean;
-          }
-
-          // `httpOnly` attribute
-          if (changedAttributes.httpOnly === undefined) {
-            details.httpOnly = previousAttributes.httpOnly as boolean;
-          } else {
-            details.httpOnly = changedAttributes.httpOnly as boolean;
-          }
-
-          // If it's undefined, it means that the `hostOnly` value
-          // did not get changed, therefore, get the previous value.
-          if (changedAttributes.hostOnly === undefined) {
-            if (previousAttributes.hostOnly === false) {
-              details.domain =
-                (changedAttributes.domain as string) || (previousAttributes.domain as string);
-            }
-          } else {
-            if (changedAttributes.hostOnly === false) {
-              details.domain =
-                (changedAttributes.domain as string) || (previousAttributes.domain as string);
-            }
-          }
-
-          // `expirationDate` attribute
-          const isSessionChanged = changedAttributes.session !== undefined;
-          if (isSessionChanged) {
-            if (changedAttributes.session) {
-              details.expirationDate = undefined;
-            } else {
-              details.expirationDate = changedAttributes.expirationDate as number;
-            }
-          } else {
-            details.expirationDate =
-              (changedAttributes.expirationDate as number) ||
-              (previousAttributes.expirationDate as number);
-          }
-
-          chrome.cookies.set(details, (cookie) => {
-            const enriched = cookie as chrome.cookies.Cookie & { id?: unknown };
-            enriched.id = previousAttributes.id;
-            port.postMessage({ command, data: enriched });
-          });
-        });
-      });
+    case 'removeAllCookies': {
+      await CookieService.removeAll(tabId);
+      send(port, command, { cookies: [] });
+      return;
     }
   }
 }
 
 chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener((msg: PortMessage) => {
-    onPortMessageReceived(msg, port);
+    void handle(msg, port);
   });
 });
 
-chrome.webNavigation.onDOMContentLoaded.addListener(onDOMContentLoaded);
-chrome.webNavigation.onBeforeNavigate.addListener(onNavigate);
+chrome.webNavigation.onDOMContentLoaded.addListener(async (details) => {
+  if (details.frameId !== 0) return;
+  const port = ports.get(details.tabId);
+  if (!port) return;
+  const cookies = await CookieService.list(details.tabId);
+  send(port, 'cookies:read', { cookies });
+});
+
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
+  if (details.frameId !== 0) return;
+  const port = ports.get(details.tabId);
+  if (!port) return;
+  send(port, 'navigate', undefined);
+});
