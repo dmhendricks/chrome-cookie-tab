@@ -1,8 +1,20 @@
 # Cookies Tab in DevTools Changelog
 
-### Master
+### Release 3.0.0
 
-- Improve dark mode style for edit form
+- Make cookie import atomic: replace the panel's `removeAll` + per-cookie `create` burst with a single `cookies:import` command in the background. Fixes a race where imports could leave an empty cookie store. Cap imports at 1000 cookies and 8 KiB per value, and surface JSON/schema errors in the UI.
+- Confirm destructive cookie import before overwriting existing cookies.
+- Validate IPC and imported cookies with a shared valibot schema, replacing unsafe casts at the panel/background boundary.
+- Drop `eval`-based domain lookup in **Add New**; read the domain from the active tab instead.
+- Filter port connections in the background script and add Rollup overrides for the build.
+- Pause cookie refresh while the DevTools panel is hidden, via `chrome.devtools.panels` `onShown`/`onHidden` and `panel:pause` / `panel:resume` messages. On resume the background sends a fresh `cookies:read`.
+- Attach `webNavigation` listeners only while a panel port is connected, so the service worker isn't kept warm doing cookie work no panel consumes.
+- Derive stable cookie row IDs from the chrome identity tuple (`storeId|domain|path|name`) so unchanged rows keep referential identity across refreshes and Preact can skip remounting them.
+- Hoist filler cells and memoize the `<colgroup>` in `Content` to cut re-render cost.
+- Fix column resize sending an absolute delta from drag-start while the hook applied it incrementally, causing widths to compound wildly. Send per-event incremental delta.
+- Reposition the context menu to stay within the viewport; dismiss it on mousedown outside.
+- Focus the value field when the edit form opens; rename the submit button to "Save".
+- Improve input colors and edit-form styling in dark mode.
 
 ### Release 2.2.0
 

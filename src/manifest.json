@@ -2,7 +2,7 @@
    "manifest_version": 3,
    "name": "Cookies Tab in DevTools",
    "short_name": "Cookies Tab",
-   "version": "2.2.0",
+   "version": "3.0.0",
    "devtools_page": "src/devtools/devtools-page.html",
    "description": "Add a tab to DevTools for easy cookies management",
    "author": "Daniel M. Hendricks",

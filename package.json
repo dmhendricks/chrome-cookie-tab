@@ -1,7 +1,7 @@
 {
   "name": "chrome-cookies-tab",
   "private": true,
-  "version": "2.2.0",
+  "version": "3.0.0",
   "type": "module",
   "description": "Missing cookie manager for Google Chrome. Edit and create cookies right in the Developer Tools.",
   "license": "MIT",
