@@ -92,7 +92,7 @@ export class Socket {
   }
 
   update(
-    previousAttributes: Cookie & { id?: number },
+    previousAttributes: Cookie & { id?: string },
     changedAttributes: Partial<Cookie> & { session?: boolean; hostOnly?: boolean },
   ): void {
     this.send({

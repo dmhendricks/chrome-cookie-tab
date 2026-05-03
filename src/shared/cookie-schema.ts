@@ -42,7 +42,7 @@ export type ValidatedCookieFormInput = v.InferOutput<typeof CookieFormInputSchem
 export const UpdatePayloadSchema = v.object({
   previousAttributes: v.intersect([
     CookieSchema,
-    v.object({ id: v.optional(v.number()) }),
+    v.object({ id: v.optional(v.string()) }),
   ]),
   changedAttributes: CookieFormInputSchema,
 });
@@ -63,7 +63,7 @@ const ImportCookieSchema = v.intersect([
       ),
     ),
   }),
-  v.object({ id: v.optional(v.number()) }),
+  v.object({ id: v.optional(v.string()) }),
 ]);
 
 /** Import file: array of cookies, each may have a UI-only `id` that we drop. */

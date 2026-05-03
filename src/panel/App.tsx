@@ -71,7 +71,7 @@ export function App({ socket }: Props) {
         }
       }
       const cookie: UICookie = {
-        id: -1,
+        id: '',
         domain,
         expirationDate: oneYear.getTime() / 1000,
         hostOnly: false,

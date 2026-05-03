@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import * as v from 'valibot';
 import type { Socket } from '../socket';
-import type { UICookie } from '../types';
+import { cookieKey, type UICookie } from '../types';
 import {
   IncomingCookieSchema,
   IncomingCookieListSchema,
@@ -9,29 +9,45 @@ import {
 
 const UpdateResponseSchema = v.intersect([
   IncomingCookieSchema,
-  v.object({ id: v.number() }),
+  v.object({ id: v.string() }),
 ]);
 
 export function useCookies(socket: Socket) {
   const [cookies, setCookies] = useState<UICookie[]>([]);
-  const ctr = useRef(0);
-
-  const nextId = () => {
-    ctr.current += 1;
-    return ctr.current;
-  };
 
   useEffect(() => {
     const offRead = socket.on('cookies:read', (data) => {
       const result = v.safeParse(IncomingCookieListSchema, data);
       if (!result.success) return;
-      setCookies(result.output.cookies.map((c) => ({ ...c, id: nextId() })));
+      setCookies((prev) => {
+        const byId = new Map(prev.map((c) => [c.id, c]));
+        return result.output.cookies.map((c) => {
+          const id = cookieKey(c);
+          const existing = byId.get(id);
+          if (!existing) return { ...c, id };
+          const e = existing as unknown as Record<string, unknown>;
+          const n = c as unknown as Record<string, unknown>;
+          for (const k of Object.keys(n)) {
+            if (e[k] !== n[k]) return { ...existing, ...c, id };
+          }
+          return existing;
+        });
+      });
     });
 
     const offCreate = socket.on('cookies:create', (data) => {
       const result = v.safeParse(IncomingCookieSchema, data);
       if (!result.success) return;
-      setCookies((prev) => [...prev, { ...result.output, id: nextId() }]);
+      const id = cookieKey(result.output);
+      setCookies((prev) => {
+        const idx = prev.findIndex((c) => c.id === id);
+        if (idx >= 0) {
+          const next = prev.slice();
+          next[idx] = { ...prev[idx], ...result.output, id };
+          return next;
+        }
+        return [...prev, { ...result.output, id }];
+      });
     });
 
     const offUpdate = socket.on('cookies:update', (data) => {
