@@ -1,3 +1,4 @@
+import { useMemo } from 'preact/hooks';
 import type { UICookie } from '../types';
 import { CookieRow } from './CookieRow';
 
@@ -9,6 +10,8 @@ interface Props {
   onRowDoubleClick: (c: UICookie) => void;
 }
 
+const FILLER_CELLS = Array.from({ length: 9 }, (_, i) => <td key={i}></td>);
+
 export function Content({
   cookies,
   widths,
@@ -16,15 +19,22 @@ export function Content({
   onFillerContextMenu,
   onRowDoubleClick,
 }: Props) {
+  const cols = useMemo(
+    () => (
+      <colgroup>
+        {widths.map((w, i) => (
+          <col key={i} style={{ width: `${w}%` }} />
+        ))}
+        <col style={{ width: '14px' }} />
+      </colgroup>
+    ),
+    [widths],
+  );
+
   return (
     <div id="content">
       <table style={{ width: '100%', height: '100%' }}>
-        <colgroup>
-          {widths.map((w, i) => (
-            <col key={i} style={{ width: `${w}%` }} />
-          ))}
-          <col style={{ width: '14px' }} />
-        </colgroup>
+        {cols}
         <tbody>
           {cookies.map((c) => (
             <CookieRow
@@ -38,9 +48,7 @@ export function Content({
             className="filler"
             onContextMenu={(e) => onFillerContextMenu(e as unknown as MouseEvent)}
           >
-            {Array.from({ length: 9 }).map((_, i) => (
-              <td key={i}></td>
-            ))}
+            {FILLER_CELLS}
           </tr>
         </tbody>
       </table>
