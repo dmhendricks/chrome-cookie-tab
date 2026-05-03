@@ -1,4 +1,4 @@
-import { useState } from 'preact/hooks';
+import { useEffect, useRef, useState } from 'preact/hooks';
 import type { UICookie } from '../types';
 import { expirationDate, isSession } from '../util';
 
@@ -26,8 +26,17 @@ function pad(n: number): string {
 
 export function CookieForm({ initial, onSubmit, onCancel }: Props) {
   const initialDate = expirationDate(initial);
+  const valueRef = useRef<HTMLTextAreaElement>(null);
   const [name, setName] = useState(initial.name ?? '');
   const [value, setValue] = useState(initial.value ?? '');
+
+  useEffect(() => {
+    const el = valueRef.current;
+    if (!el) return;
+    el.focus();
+    const len = el.value.length;
+    el.setSelectionRange(len, len);
+  }, []);
   const [domain, setDomain] = useState(initial.domain ?? '');
   const [path, setPath] = useState(initial.path ?? '/');
   const [session, setSession] = useState(isSession(initial));
@@ -84,6 +93,7 @@ export function CookieForm({ initial, onSubmit, onCancel }: Props) {
                 <th className="label"><label>Value</label></th>
                 <td className="data">
                   <textarea
+                    ref={valueRef}
                     value={value}
                     onInput={(e) => setValue((e.target as HTMLTextAreaElement).value)}
                   />
