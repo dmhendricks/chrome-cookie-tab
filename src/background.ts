@@ -17,6 +17,12 @@ const PortMessageSchema = v.object({
  */
 const ports = new Map<number, chrome.runtime.Port>();
 
+/**
+ * tabIds whose panel is currently hidden. We skip navigation-driven cookie
+ * pushes for these; the panel sends a fresh read when it resumes.
+ */
+const paused = new Set<number>();
+
 function send(port: chrome.runtime.Port, command: string, data: unknown): void {
   try {
     port.postMessage({ command, data });
@@ -35,7 +41,20 @@ async function handle(rawMsg: unknown, port: chrome.runtime.Port): Promise<void>
       ports.set(tabId, port);
       port.onDisconnect.addListener(() => {
         if (ports.get(tabId) === port) ports.delete(tabId);
+        paused.delete(tabId);
       });
+      return;
+    }
+
+    case 'panel:pause': {
+      paused.add(tabId);
+      return;
+    }
+
+    case 'panel:resume': {
+      paused.delete(tabId);
+      const cookies = await CookieService.list(tabId);
+      send(port, 'cookies:read', { cookies });
       return;
     }
 
@@ -102,6 +121,7 @@ chrome.webNavigation.onDOMContentLoaded.addListener(async (details) => {
   if (details.frameId !== 0) return;
   const port = ports.get(details.tabId);
   if (!port) return;
+  if (paused.has(details.tabId)) return;
   const cookies = await CookieService.list(details.tabId);
   send(port, 'cookies:read', { cookies });
 });
@@ -110,5 +130,6 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   if (details.frameId !== 0) return;
   const port = ports.get(details.tabId);
   if (!port) return;
+  if (paused.has(details.tabId)) return;
   send(port, 'navigate', undefined);
 });
