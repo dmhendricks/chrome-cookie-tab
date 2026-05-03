@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks';
+import { useLayoutEffect, useRef, useState } from 'preact/hooks';
 
 export interface ContextMenuActions {
   onAddNew: () => void;
@@ -20,10 +20,25 @@ interface Props {
 
 export function ContextMenu({ x, y, isInRow, actions, onDismiss }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ top: number; left: number }>({ top: y, left: x });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     ref.current?.focus();
-  }, []);
+    const body = bodyRef.current;
+    if (!body) return;
+    const { offsetWidth: w, offsetHeight: h } = body;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const margin = 4;
+    let left = x;
+    let top = y;
+    if (left + w + margin > vw) left = Math.max(margin, x - w);
+    if (left + w + margin > vw) left = Math.max(margin, vw - w - margin);
+    if (top + h + margin > vh) top = Math.max(margin, y - h);
+    if (top + h + margin > vh) top = Math.max(margin, vh - h - margin);
+    setPos({ top, left });
+  }, [x, y]);
 
   const item = (id: string, label: string, fn: () => void) => (
     <div
@@ -56,7 +71,7 @@ export function ContextMenu({ x, y, isInRow, actions, onDismiss }: Props) {
         onDismiss();
       }}
     >
-      <div id="context-menu-body" style={{ top: y, left: x }}>
+      <div id="context-menu-body" ref={bodyRef} style={{ top: pos.top, left: pos.left }}>
         {item('add-new-cookie', 'Add New Cookie', actions.onAddNew)}
         {isInRow && (
           <>
