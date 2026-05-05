@@ -48,8 +48,18 @@ export function App({ socket }: Props) {
     if (!settings.showFilterBar) return sorted;
     const q = filter.trim().toLowerCase();
     if (!q) return sorted;
-    return sorted.filter((c) => c.name.toLowerCase().includes(q));
-  }, [sorted, settings.showFilterBar, filter]);
+    return sorted.filter((c) => {
+      switch (settings.filterBy) {
+        case 'value':
+          return c.value.toLowerCase().includes(q);
+        case 'name-value':
+          return c.name.toLowerCase().includes(q) || c.value.toLowerCase().includes(q);
+        case 'name':
+        default:
+          return c.name.toLowerCase().includes(q);
+      }
+    });
+  }, [sorted, settings.showFilterBar, settings.filterBy, filter]);
 
   useEffect(() => {
     document.body.classList.toggle('filter-bar-visible', settings.showFilterBar);
@@ -173,7 +183,9 @@ export function App({ socket }: Props) {
 
   return (
     <>
-      {settings.showFilterBar && <FilterBar value={filter} onChange={setFilter} />}
+      {settings.showFilterBar && (
+        <FilterBar value={filter} filterBy={settings.filterBy} onChange={setFilter} />
+      )}
       <Header widths={widths} sort={sort} onSort={onSort} />
       <Content
         cookies={visible}

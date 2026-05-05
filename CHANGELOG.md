@@ -3,6 +3,7 @@
 ### Master
 
 - Add a settings popover (gear icon in the footer) with toggles for the copy-to-clipboard icons and a name filter bar. Settings persist via `chrome.storage.sync`.
+- Set export filename based on domain name and date
 
 ### Release 3.0.0
 

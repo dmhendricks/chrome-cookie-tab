@@ -600,5 +600,17 @@ body.filter-bar-visible {
       margin: 0;
       cursor: pointer;
     }
+
+    select {
+      background: var(--input-bg);
+      color: var(--input-text);
+      border: 1px solid var(--input-border);
+      border-radius: 2px;
+      font-family: var(--font-stack);
+      font-size: 11px;
+      padding: 1px 4px;
+      cursor: pointer;
+    }
   }
+
 }

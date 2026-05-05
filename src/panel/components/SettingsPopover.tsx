@@ -79,6 +79,24 @@ export function SettingsPopover({ settings, setSetting }: Props) {
             />
             <span>Show filter bar</span>
           </label>
+          {settings.showFilterBar && (
+            <label className="settings-row">
+              <span>Filter by</span>
+              <select
+                value={settings.filterBy}
+                onChange={(e) =>
+                  setSetting(
+                    'filterBy',
+                    (e.target as HTMLSelectElement).value as typeof settings.filterBy,
+                  )
+                }
+              >
+                <option value="name">Name</option>
+                <option value="value">Value</option>
+                <option value="name-value">Name or Value</option>
+              </select>
+            </label>
+          )}
         </div>
       )}
     </div>
