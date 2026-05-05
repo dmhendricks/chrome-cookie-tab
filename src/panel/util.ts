@@ -37,6 +37,26 @@ function sortKey(c: UICookie, col: SortColumn): string | number | null {
   }
 }
 
+function isIpAddress(host: string): boolean {
+  if (/^\d{1,3}(\.\d{1,3}){3}$/.test(host)) return true;
+  if (host.startsWith('[') && host.endsWith(']')) return true;
+  return false;
+}
+
+export function buildExportFilename(tabUrl: string | undefined, now: Date = new Date()): string {
+  const date = now.toISOString().slice(0, 10);
+  let host = '';
+  if (tabUrl) {
+    try {
+      host = new URL(tabUrl).hostname;
+    } catch {
+      host = '';
+    }
+  }
+  if (!host || isIpAddress(host)) return `cookies.${date}.json`;
+  return `${host.replace(/\./g, '-')}.cookies.${date}.json`;
+}
+
 export function sortCookies(
   cookies: UICookie[],
   col: SortColumn,

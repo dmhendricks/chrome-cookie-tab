@@ -10,7 +10,7 @@ import { Resizers } from './components/Resizers';
 import { useCookies } from './hooks/useCookies';
 import { useColumnResize } from './hooks/useColumnResize';
 import { useSettings } from './hooks/useSettings';
-import { sortCookies } from './util';
+import { buildExportFilename, sortCookies } from './util';
 import { CookieImportSchema } from '../shared/cookie-schema';
 import type { Socket } from './socket';
 import type { SortColumn, SortState, UICookie } from './types';
@@ -114,12 +114,14 @@ export function App({ socket }: Props) {
   };
 
   const onExport = () => {
-    const a = document.createElement('a');
-    const blob = new Blob([JSON.stringify(cookies, null, '  ')]);
-    const url = URL.createObjectURL(blob);
-    a.href = url;
-    a.download = 'export.json';
-    a.click();
+    chrome.tabs.get(socket.tabId, (tab) => {
+      const a = document.createElement('a');
+      const blob = new Blob([JSON.stringify(cookies, null, '  ')]);
+      const url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = buildExportFilename(tab?.url);
+      a.click();
+    });
   };
 
   const onImport = () => {
