@@ -13,6 +13,10 @@ Features:
 
 ## Installation
 
+The easiest way to install the extension is from the [Chrome Web Store](https://chromewebstore.google.com/detail/cookies-tab-in-devtools/nifkepndinooddpphmpmlkimamhbjdhd).
+
+Alternatively, you can install from the ZIP file:
+
 1. Download `chrome-cookies-tab.zip` from the [latest release](https://github.com/dmhendricks/chrome-cookies-tab/releases/latest) and unzip it somewhere you'll remember.
 2. Open Chrome and go to `chrome://extensions`.
 3. In the top-right corner, turn on **Developer mode**.
