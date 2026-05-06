@@ -87,6 +87,12 @@ export function useCookies(socket: Socket) {
         setCookies((prev) => prev.filter((c) => c.id !== cookie.id));
         socket.remove(cookie);
       },
+      removeMany: (toRemove: UICookie[]) => {
+        if (toRemove.length === 0) return;
+        const ids = new Set(toRemove.map((c) => c.id));
+        setCookies((prev) => prev.filter((c) => !ids.has(c.id)));
+        for (const c of toRemove) socket.remove(c);
+      },
       removeAll: () => {
         setCookies([]);
         socket.removeAll();

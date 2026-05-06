@@ -5,6 +5,8 @@ import { cookieSize, expirationDate, isSession } from '../util';
 interface Props {
   cookie: UICookie;
   showCopyIcons: boolean;
+  selected: boolean;
+  onClick: (e: MouseEvent, c: UICookie) => void;
   onContextMenu: (e: MouseEvent, c: UICookie) => void;
   onDoubleClick: (c: UICookie) => void;
 }
@@ -67,12 +69,20 @@ function CopyAffordance({ value }: { value: string }) {
   );
 }
 
-export function CookieRow({ cookie, showCopyIcons, onContextMenu, onDoubleClick }: Props) {
+export function CookieRow({
+  cookie,
+  showCopyIcons,
+  selected,
+  onClick,
+  onContextMenu,
+  onDoubleClick,
+}: Props) {
   const session = isSession(cookie);
   const expires = expirationDate(cookie);
   return (
     <tr
-      className="cookie-row"
+      className={selected ? 'cookie-row selected' : 'cookie-row'}
+      onClick={(e) => onClick(e as unknown as MouseEvent, cookie)}
       onContextMenu={(e) => onContextMenu(e as unknown as MouseEvent, cookie)}
       onDblClick={() => onDoubleClick(cookie)}
     >

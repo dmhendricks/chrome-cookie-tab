@@ -14,6 +14,8 @@
   --border-alt: rgb(179, 179, 179);
 
   --row-hover-bg: #e3e3e3;
+  --row-selected-bg: rgba(56, 121, 217, 0.18);
+  --row-selected-hover-bg: rgba(56, 121, 217, 0.28);
 
   --form-bg: rgb(232, 232, 232);
   --form-border: rgb(64%, 64%, 64%);
@@ -51,6 +53,8 @@
   --border-alt: #3e3e3e;
 
   --row-hover-bg: #3b3b3b;
+  --row-selected-bg: rgba(56, 121, 217, 0.35);
+  --row-selected-hover-bg: rgba(56, 121, 217, 0.45);
 
   --form-bg: #2a2a2a;
   --form-border: #5e5e5e;
@@ -228,11 +232,29 @@ table {
       }
     }
 
-    tr.cookie-row:hover {
-      background: var(--row-hover-bg);
+    tr.cookie-row {
+      cursor: default;
+      -webkit-user-select: none;
+      user-select: none;
 
-      .copy-affordance {
-        visibility: visible;
+      &:hover {
+        background: var(--row-hover-bg);
+
+        .copy-affordance {
+          visibility: visible;
+        }
+      }
+
+      &.selected {
+        background: var(--row-selected-bg);
+
+        .copy-affordance {
+          visibility: visible;
+        }
+      }
+
+      &.selected:hover {
+        background: var(--row-selected-hover-bg);
       }
     }
   }

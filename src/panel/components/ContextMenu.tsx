@@ -6,6 +6,7 @@ export interface ContextMenuActions {
   onRemove: () => void;
   onRemoveAll: () => void;
   onExport: () => void;
+  onExportSelected: () => void;
   onImport: () => void;
   onRefresh: () => void;
 }
@@ -14,11 +15,12 @@ interface Props {
   x: number;
   y: number;
   isInRow: boolean;
+  selectedCount: number;
   actions: ContextMenuActions;
   onDismiss: () => void;
 }
 
-export function ContextMenu({ x, y, isInRow, actions, onDismiss }: Props) {
+export function ContextMenu({ x, y, isInRow, selectedCount, actions, onDismiss }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const [pos, setPos] = useState<{ top: number; left: number }>({ top: y, left: x });
@@ -73,16 +75,26 @@ export function ContextMenu({ x, y, isInRow, actions, onDismiss }: Props) {
     >
       <div id="context-menu-body" ref={bodyRef} style={{ top: pos.top, left: pos.left }}>
         {item('add-new-cookie', 'Add New Cookie', actions.onAddNew)}
-        {isInRow && (
-          <>
-            {item('edit-cookie', 'Edit Cookie', actions.onEdit)}
-            {item('remove-cookie', 'Remove Cookie', actions.onRemove)}
-          </>
-        )}
-        <div className="context-menu-item-separator"></div>
-        {item('remove-all-cookies', 'Remove All Cookies', actions.onRemoveAll)}
+        {isInRow && selectedCount === 1 &&
+          item('edit-cookie', 'Edit Cookie', actions.onEdit)}
         {item('refresh-cookies', 'Refresh', actions.onRefresh)}
         <div className="context-menu-item-separator"></div>
+        {selectedCount === 1 && isInRow &&
+          item('remove-cookie', 'Delete Cookie', actions.onRemove)}
+        {selectedCount > 1 &&
+          item(
+            'remove-cookie',
+            `Delete Selected (${selectedCount})`,
+            actions.onRemove,
+          )}
+        {item('remove-all-cookies', 'Delete All Cookies', actions.onRemoveAll)}
+        <div className="context-menu-item-separator"></div>
+        {selectedCount > 0 &&
+          item(
+            'export-selected-cookies',
+            `Export Selected (${selectedCount})`,
+            actions.onExportSelected,
+          )}
         {item('export-all-cookies', 'Export All Cookies', actions.onExport)}
         {item('import-all-cookies', 'Import Cookies', actions.onImport)}
       </div>

@@ -6,6 +6,9 @@ interface Props {
   cookies: UICookie[];
   widths: number[];
   showCopyIcons: boolean;
+  selectedIds: Set<string>;
+  onRowClick: (e: MouseEvent, c: UICookie) => void;
+  onFillerClick: () => void;
   onRowContextMenu: (e: MouseEvent, c: UICookie) => void;
   onFillerContextMenu: (e: MouseEvent) => void;
   onRowDoubleClick: (c: UICookie) => void;
@@ -17,6 +20,9 @@ export function Content({
   cookies,
   widths,
   showCopyIcons,
+  selectedIds,
+  onRowClick,
+  onFillerClick,
   onRowContextMenu,
   onFillerContextMenu,
   onRowDoubleClick,
@@ -43,12 +49,15 @@ export function Content({
               key={c.id}
               cookie={c}
               showCopyIcons={showCopyIcons}
+              selected={selectedIds.has(c.id)}
+              onClick={onRowClick}
               onContextMenu={onRowContextMenu}
               onDoubleClick={onRowDoubleClick}
             />
           ))}
           <tr
             className="filler"
+            onClick={onFillerClick}
             onContextMenu={(e) => onFillerContextMenu(e as unknown as MouseEvent)}
           >
             {FILLER_CELLS}
