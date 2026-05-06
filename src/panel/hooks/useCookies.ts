@@ -98,7 +98,6 @@ export function useCookies(socket: Socket) {
         socket.removeAll();
       },
       importAll: (cookies: Parameters<Socket['import']>[0]) => {
-        setCookies([]);
         socket.import(cookies);
       },
       update: (

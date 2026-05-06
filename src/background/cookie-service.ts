@@ -52,14 +52,15 @@ export const CookieService = {
     return chrome.cookies.remove({ url, name });
   },
 
-  async replaceAll(tabId: number, inputs: CookieFormInput[]): Promise<Cookie[]> {
-    await this.removeAll(tabId);
+  async importMerge(tabId: number, inputs: CookieFormInput[]): Promise<Cookie[]> {
+    const url = await tabUrl(tabId);
+    if (!url) return [];
     const created: Cookie[] = [];
     for (const input of inputs) {
       const cookie = await this.create(tabId, input);
       if (cookie) created.push(cookie);
     }
-    return created;
+    return chrome.cookies.getAll({ url });
   },
 
   async removeAll(tabId: number): Promise<void> {

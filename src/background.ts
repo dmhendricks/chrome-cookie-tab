@@ -138,7 +138,7 @@ async function handle(rawMsg: unknown, port: chrome.runtime.Port): Promise<void>
     case 'cookies:import': {
       const input = v.safeParse(v.array(CookieFormInputSchema), data);
       if (!input.success) return;
-      const cookies = await CookieService.replaceAll(tabId, input.output);
+      const cookies = await CookieService.importMerge(tabId, input.output);
       send(port, 'cookies:read', { cookies });
       return;
     }

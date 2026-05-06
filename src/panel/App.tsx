@@ -289,7 +289,7 @@ export function App({ socket }: Props) {
           return;
         }
         const confirmed = window.confirm(
-          `This will delete ${cookies.length} existing cookie(s) and import ${result.output.length}. Continue?`,
+          `Import ${result.output.length} cookie(s)? Existing cookies with the same name, domain, and path will be overwritten.`,
         );
         if (!confirmed) return;
         importAll(
