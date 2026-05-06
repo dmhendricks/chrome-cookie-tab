@@ -300,21 +300,26 @@ table {
   background: var(--form-bg);
   color: var(--text);
   border-left: 1px solid var(--form-border);
-  box-shadow: -1px 0 3px rgba(0, 0, 0, 0.08);
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #cookie-form-view-header {
-  background-image: linear-gradient(to bottom, rgb(162, 177, 207), rgb(120, 138, 177));
-  text-shadow: rgba(0, 0, 0, 0.33) 1px 1px 0;
-  padding: 10px 0 10px 10px;
-  color: #fff;
-  font-size: 14px;
+  padding: 12px 16px;
+  background: var(--header-bg);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
 }
 
 #cookie-form-body {
-  padding: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 #cookie-form {
@@ -414,87 +419,134 @@ table {
   }
 }
 
-.label {
-  text-align: right;
-  vertical-align: top;
-  padding: 4px;
-}
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
-.data {
-  vertical-align: top;
+  label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.85;
+  }
 
   input[type='text'],
-  input[type='number'],
+  input[type='datetime-local'],
   textarea {
     background: var(--input-bg);
     color: var(--input-text);
     border: 1px solid var(--input-border);
-    border-radius: 2px;
+    border-radius: 4px;
+    padding: 6px 8px;
     font-family: var(--font-stack);
-
-    &:disabled {
-      opacity: 0.6;
-    }
-  }
-
-  input[type='text'] {
-    width: 310px;
+    font-size: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
 
     &:focus {
-      outline-width: 5px;
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(56, 121, 217, 0.18);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 
   textarea {
-    resize: none;
-    width: 310px;
-    height: 80px;
+    resize: vertical;
+    min-height: 72px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.4;
+  }
+}
 
-    &:focus {
-      outline-width: 5px;
+.darkTheme .form-field input[type='datetime-local'] {
+  color-scheme: dark;
+}
+
+.form-flags {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  padding: 8px 12px 10px;
+  margin: 0;
+
+  legend {
+    padding: 0 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    opacity: 0.85;
+  }
+
+  .flag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+
+    input[type='checkbox'] {
+      margin: 0;
+      cursor: pointer;
+      accent-color: var(--accent-blue);
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+
+  button {
+    font-family: var(--font-stack);
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.12s ease, border-color 0.12s ease;
+  }
+
+  .btn-primary {
+    background: var(--accent-blue);
+    color: #fff;
+    border-color: var(--accent-blue);
+
+    &:hover {
+      background: rgb(46, 105, 195);
+      border-color: rgb(46, 105, 195);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56, 121, 217, 0.35);
     }
   }
 
-  button {
+  .btn-secondary {
     background: var(--button-bg);
     color: var(--button-text);
-    border: 1px solid var(--button-border);
-    border-radius: 3px;
-    padding: 3px 12px;
-    font-family: var(--font-stack);
-    cursor: pointer;
+    border-color: var(--button-border);
 
     &:hover {
       background: var(--button-bg-hover);
     }
-  }
 
-  .year {
-    width: 45px;
-  }
-
-  .month,
-  .day,
-  .hours,
-  .minutes,
-  .seconds {
-    width: 35px;
-  }
-
-  &.checkboxes {
-    text-align: center;
-    font-weight: bold;
-
-    span {
-      margin-right: 8px;
-    }
-  }
-
-  &.buttons {
-    text-align: center;
-
-    button + button {
-      margin-left: 10px;
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56, 121, 217, 0.18);
     }
   }
 }

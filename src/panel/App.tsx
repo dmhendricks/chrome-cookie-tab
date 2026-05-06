@@ -359,6 +359,7 @@ export function App({ socket }: Props) {
         <CookieForm
           key={editor.isNew ? 'new' : editor.initial.id}
           initial={editor.initial}
+          isNew={editor.isNew}
           onSubmit={onSubmitForm}
           onCancel={() => setEditor(null)}
         />

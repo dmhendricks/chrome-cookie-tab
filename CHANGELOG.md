@@ -4,6 +4,9 @@
 
 - Add a settings popover (gear icon in the footer) with toggles for the copy-to-clipboard icons and a name filter bar. Settings persist via `chrome.storage.sync`.
 - Set export filename based on domain name and date
+- Added ability to select multiple rows for deletion, export
+- Fixed bug where form didn't update to newly selected row when open
+- Various style improvements
 
 ### Release 3.0.0
 

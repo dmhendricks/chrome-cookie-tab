@@ -1,15 +1,15 @@
 # Cookies Tab in DevTools
 
 A cookie manager for Google Chrome. Edit and create cookies right
-in the Developer Tools. Forked from [westoque/cookie_inspector](https://github.com/westoque/cookie_inspector). Now with proper dark mode support!
+in the Developer Tools. Forked from [westoque/cookie_inspector](https://github.com/westoque/cookie_inspector) and modernized.
 
 ![Cookies Tab in DevTools Screenshot](store/screenshot-1280x350.png)
 
 Features:
 
-- View, Add, Edit, Remove Cookies
-- Live Reloading (No need to close and open the inspector when you change URLs)
-- Export Cookies
+- View, add, edit, filter and delete cookies
+- Live reloading (no need to close and open the inspector when you change URLs)
+- Import and export cookies
 
 ## Installation
 
