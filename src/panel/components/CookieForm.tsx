@@ -16,6 +16,7 @@ export interface FormValues {
 
 interface Props {
   initial: UICookie;
+  isNew: boolean;
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
 }
@@ -28,9 +29,11 @@ function toDatetimeLocal(d: Date): string {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-export function CookieForm({ initial, onSubmit, onCancel }: Props) {
+export function CookieForm({ initial, isNew, onSubmit, onCancel }: Props) {
   const initialDate = expirationDate(initial);
   const valueRef = useRef<HTMLTextAreaElement>(null);
+  const viewRef = useRef<HTMLDivElement>(null);
+  const [showHeader, setShowHeader] = useState(false);
   const [name, setName] = useState(initial.name ?? '');
   const [value, setValue] = useState(initial.value ?? '');
   const [domain, setDomain] = useState(initial.domain ?? '');
@@ -49,6 +52,16 @@ export function CookieForm({ initial, onSubmit, onCancel }: Props) {
     el.focus();
     const len = el.value.length;
     el.setSelectionRange(len, len);
+  }, []);
+
+  useEffect(() => {
+    const el = viewRef.current;
+    if (!el) return;
+    const update = () => setShowHeader(el.clientHeight >= 250);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
   useEffect(() => {
@@ -84,7 +97,10 @@ export function CookieForm({ initial, onSubmit, onCancel }: Props) {
   };
 
   return (
-    <div id="cookie-form-view">
+    <div id="cookie-form-view" ref={viewRef}>
+      {showHeader && (
+        <div id="cookie-form-view-header">{isNew ? 'Add Cookie' : 'Edit Cookie'}</div>
+      )}
       <form id="cookie-form" onSubmit={submit}>
         <div id="cookie-form-body">
           <div className="form-field">
