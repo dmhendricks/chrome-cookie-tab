@@ -38,3 +38,15 @@ npm run lint
 ```
 
 Load the extension in Chrome from `chrome://extensions` → **Load unpacked** → select `dist/`.
+
+## Translations
+
+The extension uses Chrome's built-in [`chrome.i18n`](https://developer.chrome.com/docs/extensions/reference/api/i18n) API. Adding a new language is a single drop-in JSON file — no code changes.
+
+To contribute a translation:
+
+1. Copy [`public/_locales/en/messages.json`](public/_locales/en/messages.json) to `public/_locales/<lang>/messages.json`, where `<lang>` is a [Chrome-supported locale code](https://developer.chrome.com/docs/extensions/reference/api/i18n#supported-locales) (`es`, `fr`, `de`, `ja`, `pt_BR`, …).
+2. Translate the `message` fields. Leave the keys, `description` fields, and `placeholders` blocks untouched — `description` is for translator context, and placeholders like `$COUNT$` are substituted at runtime by Chrome.
+3. Submit a pull request.
+
+Missing keys fall back to English automatically, so partial translations are safe.
