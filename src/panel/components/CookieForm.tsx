@@ -35,6 +35,7 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel }: Props) {
   const valueRef = useRef<HTMLTextAreaElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
   const [showHeader, setShowHeader] = useState(false);
+  const [tallValue, setTallValue] = useState(false);
   const [name, setName] = useState(initial.name ?? '');
   const [value, setValue] = useState(initial.value ?? '');
   const [domain, setDomain] = useState(initial.domain ?? '');
@@ -58,7 +59,11 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel }: Props) {
   useEffect(() => {
     const el = viewRef.current;
     if (!el) return;
-    const update = () => setShowHeader(el.clientHeight >= 250);
+    const update = () => {
+      const h = el.clientHeight;
+      setShowHeader(h >= 250);
+      setTallValue(h > 300);
+    };
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
@@ -143,6 +148,7 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel }: Props) {
               id="cf-value"
               ref={valueRef}
               value={value}
+              style={tallValue ? { minHeight: '88px' } : undefined}
               onInput={(e) => setValue((e.target as HTMLTextAreaElement).value)}
             />
           </div>
