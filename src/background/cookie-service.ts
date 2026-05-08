@@ -53,14 +53,13 @@ export const CookieService = {
   },
 
   async importMerge(tabId: number, inputs: CookieFormInput[]): Promise<Cookie[]> {
-    const url = await tabUrl(tabId);
-    if (!url) return [];
+    if (!(await tabUrl(tabId))) return [];
     const created: Cookie[] = [];
     for (const input of inputs) {
       const cookie = await this.create(tabId, input);
       if (cookie) created.push(cookie);
     }
-    return chrome.cookies.getAll({ url });
+    return created;
   },
 
   async removeAll(tabId: number): Promise<void> {
