@@ -192,11 +192,11 @@
   },
 
   "footerTotalCookies": {
-    "message": "Total des cookies :",
+    "message": "Total des cookies :",
     "description": "Footer label preceding the total cookie count number."
   },
   "footerSelected": {
-    "message": "Sélection :",
+    "message": "Sélection :",
     "description": "Footer label preceding the count of currently selected cookies (only shown when 2+ are selected)."
   },
 
@@ -214,14 +214,14 @@
   },
 
   "importInvalidJson": {
-    "message": "Échec de l'importation des cookies : $REASON$",
+    "message": "Échec de l'importation des cookies : $REASON$",
     "description": "Alert shown when the imported file is not valid JSON. $REASON$ is the parser's error message.",
     "placeholders": {
       "reason": { "content": "$1", "example": "Unexpected token } in JSON at position 42" }
     }
   },
   "importSchemaFailed": {
-    "message": "Échec de l'importation des cookies :\n$DETAILS$",
+    "message": "Échec de l'importation des cookies :\n$DETAILS$",
     "description": "Alert shown when the imported JSON does not match the expected cookie schema. $DETAILS$ is a multi-line summary of validation issues.",
     "placeholders": {
       "details": { "content": "$1", "example": "0.name: Required\n1.domain: Invalid type" }
@@ -235,7 +235,7 @@
     }
   },
   "importConfirm": {
-    "message": "Importer $COUNT$ cookie(s) ? Les cookies existants ayant les mêmes nom, domaine et chemin seront remplacés.",
+    "message": "Importer $COUNT$ cookies ? Les cookies existants ayant les mêmes nom, domaine et chemin seront remplacés.",
     "description": "Confirmation dialog shown before importing cookies. $COUNT$ is the number of cookies in the import file.",
     "placeholders": {
       "count": { "content": "$1", "example": "12" }

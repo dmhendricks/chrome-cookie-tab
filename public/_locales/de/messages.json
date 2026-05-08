@@ -235,7 +235,7 @@
     }
   },
   "importConfirm": {
-    "message": "$COUNT$ Cookie(s) importieren? Vorhandene Cookies mit gleichem Namen, gleicher Domain und gleichem Pfad werden überschrieben.",
+    "message": "$COUNT$ Cookies importieren? Vorhandene Cookies mit gleichem Namen, gleicher Domain und gleichem Pfad werden überschrieben.",
     "description": "Confirmation dialog shown before importing cookies. $COUNT$ is the number of cookies in the import file.",
     "placeholders": {
       "count": { "content": "$1", "example": "12" }
