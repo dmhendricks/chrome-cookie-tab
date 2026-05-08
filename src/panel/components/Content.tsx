@@ -59,8 +59,24 @@ export function Content({
     [widths],
   );
 
+  const onBackgroundClick = (e: MouseEvent) => {
+    const el = e.target as HTMLElement;
+    if (el.closest('tr.cookie-row') || el.closest('thead')) return;
+    onFillerClick();
+  };
+
+  const onBackgroundContextMenu = (e: MouseEvent) => {
+    const el = e.target as HTMLElement;
+    if (el.closest('tr.cookie-row') || el.closest('thead')) return;
+    onFillerContextMenu(e);
+  };
+
   return (
-    <div id="content">
+    <div
+      id="content"
+      onClick={(e) => onBackgroundClick(e as unknown as MouseEvent)}
+      onContextMenu={(e) => onBackgroundContextMenu(e as unknown as MouseEvent)}
+    >
       <table style={{ width: '100%' }}>
         {cols}
         <thead>
@@ -92,13 +108,7 @@ export function Content({
               onDoubleClick={onRowDoubleClick}
             />
           ))}
-          <tr
-            className="filler"
-            onClick={onFillerClick}
-            onContextMenu={(e) => onFillerContextMenu(e as unknown as MouseEvent)}
-          >
-            {FILLER_CELLS}
-          </tr>
+          <tr className="filler">{FILLER_CELLS}</tr>
         </tbody>
       </table>
     </div>
