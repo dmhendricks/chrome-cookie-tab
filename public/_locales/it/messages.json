@@ -11,6 +11,10 @@
     "message": "Gestione semplificata dei cookie tramite una scheda dedicata negli Strumenti per sviluppatori",
     "description": "Extension description shown in Chrome Web Store and chrome://extensions."
   },
+  "panelTabTitle": {
+    "message": "Cookie",
+    "description": "Label of the extension's tab inside Chrome DevTools (sits next to Elements, Console, Network, etc.)."
+  },
 
   "columnName": {
     "message": "Nome",

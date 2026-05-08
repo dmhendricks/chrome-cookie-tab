@@ -3,7 +3,7 @@ interface PanelWindow extends Window {
 }
 
 chrome.devtools.panels.create(
-  'Cookies',
+  chrome.i18n.getMessage('panelTabTitle') || 'Cookies',
   'cookie-icon.png',
   'src/panel/panel.html',
   (panel) => {

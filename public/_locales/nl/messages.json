@@ -11,6 +11,10 @@
     "message": "Eenvoudig cookiebeheer via een speciaal tabblad in de ontwikkelaarstools",
     "description": "Extension description shown in Chrome Web Store and chrome://extensions."
   },
+  "panelTabTitle": {
+    "message": "Cookies",
+    "description": "Label of the extension's tab inside Chrome DevTools (sits next to Elements, Console, Network, etc.)."
+  },
 
   "columnName": {
     "message": "Naam",
