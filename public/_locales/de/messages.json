@@ -155,6 +155,20 @@
     "message": "Cookies importieren",
     "description": "Context menu item — import cookies from a JSON file."
   },
+  "cookiesExported": {
+    "message": "$COUNT$ Cookies exportiert",
+    "description": "Toast shown after the user exports cookies to a JSON file. $COUNT$ is the number of cookies written to the file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  },
+  "cookiesImported": {
+    "message": "$COUNT$ Cookies importiert",
+    "description": "Toast shown after the user imports cookies from a JSON file. $COUNT$ is the number of cookies read from the file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  },
 
   "settingsTitle": {
     "message": "Einstellungen",

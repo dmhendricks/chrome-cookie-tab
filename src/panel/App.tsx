@@ -82,6 +82,7 @@ export function App({ socket }: Props) {
 
   useEffect(() => {
     setSelectedIds((prev) => {
+      if (prev.size === 0) return prev;
       let changed = false;
       const next = new Set<string>();
       for (const id of prev) {
@@ -259,6 +260,7 @@ export function App({ socket }: Props) {
       a.href = url;
       a.download = buildExportFilename(tab?.url);
       a.click();
+      showToast(t('cookiesExported', String(toExport.length)), 'info', 4500);
     });
   };
 
@@ -302,12 +304,12 @@ export function App({ socket }: Props) {
           t('importConfirm', String(result.output.length)),
         );
         if (!confirmed) return;
-        importAll(
-          result.output.map(({ id: _id, ...rest }) => {
-            void _id;
-            return rest;
-          }),
-        );
+        const toImport = result.output.map(({ id: _id, ...rest }) => {
+          void _id;
+          return rest;
+        });
+        importAll(toImport);
+        showToast(t('cookiesImported', String(toImport.length)), 'info', 4500);
       });
       fr.readAsText(file);
     });
