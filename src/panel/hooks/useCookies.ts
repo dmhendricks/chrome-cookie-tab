@@ -5,7 +5,24 @@ import { cookieKey, type UICookie } from '../types';
 import {
   IncomingCookieSchema,
   IncomingCookieListSchema,
+  type IncomingCookie,
 } from '../../shared/cookie-schema';
+
+function cookieEquals(a: UICookie, b: IncomingCookie): boolean {
+  return (
+    a.name === b.name &&
+    a.value === b.value &&
+    a.domain === b.domain &&
+    a.path === b.path &&
+    a.secure === b.secure &&
+    a.httpOnly === b.httpOnly &&
+    a.hostOnly === b.hostOnly &&
+    a.session === b.session &&
+    a.expirationDate === b.expirationDate &&
+    a.sameSite === b.sameSite &&
+    a.storeId === b.storeId
+  );
+}
 
 const UpdateResponseSchema = v.intersect([
   IncomingCookieSchema,
@@ -25,12 +42,8 @@ export function useCookies(socket: Socket) {
           const id = cookieKey(c);
           const existing = byId.get(id);
           if (!existing) return { ...c, id };
-          const e = existing as unknown as Record<string, unknown>;
-          const n = c as unknown as Record<string, unknown>;
-          for (const k of Object.keys(n)) {
-            if (e[k] !== n[k]) return { ...existing, ...c, id };
-          }
-          return existing;
+          if (cookieEquals(existing, c)) return existing;
+          return { ...existing, ...c, id };
         });
       });
     });
