@@ -229,11 +229,11 @@ export function App({ socket }: Props) {
         expirationDate: oneYear.getTime() / 1000,
         hostOnly: false,
         httpOnly: false,
-        name: 'Cookie',
+        name: '',
         path: '/',
         secure: false,
         session: false,
-        value: 'Value',
+        value: '',
         sameSite: 'unspecified',
         storeId: '',
       };

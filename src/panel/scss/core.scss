@@ -561,6 +561,13 @@ table {
       outline: none;
       box-shadow: 0 0 0 3px rgba(56, 121, 217, 0.35);
     }
+
+    &:disabled {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
   }
 
   .btn-secondary {

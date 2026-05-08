@@ -38,6 +38,7 @@ function toDatetimeLocal(d: Date): string {
 
 export function CookieForm({ initial, isNew, onSubmit, onCancel, showToast }: Props) {
   const initialDate = expirationDate(initial);
+  const nameRef = useRef<HTMLInputElement>(null);
   const valueRef = useRef<HTMLTextAreaElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
   const [showHeader, setShowHeader] = useState(false);
@@ -55,7 +56,7 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel, showToast }: Pr
   );
 
   useEffect(() => {
-    const el = valueRef.current;
+    const el = nameRef.current;
     if (!el) return;
     el.focus();
     const len = el.value.length;
@@ -87,8 +88,11 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel, showToast }: Pr
     return () => window.removeEventListener('keydown', onKey);
   }, [onCancel]);
 
+  const canSave = name.trim().length > 0;
+
   const submit = (e: Event) => {
     e.preventDefault();
+    if (!canSave) return;
     const values: FormValues = {
       name,
       value,
@@ -150,6 +154,7 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel, showToast }: Pr
             <label for="cf-name">{t('formName')}</label>
             <input
               id="cf-name"
+              ref={nameRef}
               type="text"
               value={name}
               onInput={(e) => setName((e.target as HTMLInputElement).value)}
@@ -239,7 +244,7 @@ export function CookieForm({ initial, isNew, onSubmit, onCancel, showToast }: Pr
             >
               {t('formCancel')}
             </button>
-            <button className="btn-primary" type="submit">
+            <button className="btn-primary" type="submit" disabled={!canSave}>
               {t('formSave')}
             </button>
           </div>
