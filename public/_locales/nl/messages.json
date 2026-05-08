@@ -1,0 +1,240 @@
+{
+  "extName": {
+    "message": "Cookies-tabblad in Ontwikkelaarstools",
+    "description": "Extension name shown in Chrome Web Store and chrome://extensions."
+  },
+  "extShortName": {
+    "message": "Cookies-tabblad",
+    "description": "Short extension name shown when space is constrained."
+  },
+  "extDescription": {
+    "message": "Eenvoudig cookiebeheer via een speciaal tabblad in de ontwikkelaarstools",
+    "description": "Extension description shown in Chrome Web Store and chrome://extensions."
+  },
+
+  "columnName": {
+    "message": "Naam",
+    "description": "Column header — cookie name."
+  },
+  "columnValue": {
+    "message": "Waarde",
+    "description": "Column header — cookie value."
+  },
+  "columnDomain": {
+    "message": "Domein",
+    "description": "Column header — cookie domain."
+  },
+  "columnSize": {
+    "message": "Grootte",
+    "description": "Column header — cookie size in bytes."
+  },
+  "columnPath": {
+    "message": "Pad",
+    "description": "Column header — cookie path."
+  },
+  "columnExpires": {
+    "message": "Verloopt (GMT)",
+    "description": "Column header — cookie expiration date in GMT timezone."
+  },
+  "columnHttpOnly": {
+    "message": "HTTP",
+    "description": "Column header — abbreviated label for the HttpOnly flag."
+  },
+  "columnSecure": {
+    "message": "Beveiligd",
+    "description": "Column header — Secure flag."
+  },
+
+  "formAddTitle": {
+    "message": "Cookie toevoegen",
+    "description": "Header text shown above the form when adding a new cookie."
+  },
+  "formEditTitle": {
+    "message": "Cookie bewerken",
+    "description": "Header text shown above the form when editing an existing cookie."
+  },
+  "formClose": {
+    "message": "Sluiten",
+    "description": "Tooltip and accessible label for the form's close (X) button."
+  },
+  "formName": {
+    "message": "Naam",
+    "description": "Label for the cookie name input in the edit/add form."
+  },
+  "formValue": {
+    "message": "Waarde",
+    "description": "Label for the cookie value input in the edit/add form."
+  },
+  "formDomain": {
+    "message": "Domein",
+    "description": "Label for the cookie domain input in the edit/add form."
+  },
+  "formPath": {
+    "message": "Pad",
+    "description": "Label for the cookie path input in the edit/add form."
+  },
+  "formExpires": {
+    "message": "Verloopt",
+    "description": "Label for the cookie expiration date input in the edit/add form."
+  },
+  "formFlagSession": {
+    "message": "Sessie",
+    "description": "Checkbox label — marks the cookie as a session cookie (deleted when browser closes)."
+  },
+  "formFlagHostOnly": {
+    "message": "Alleen host",
+    "description": "Checkbox label — restricts cookie to the exact host, no subdomains."
+  },
+  "formFlagHttpOnly": {
+    "message": "Alleen HTTP",
+    "description": "Checkbox label — cookie is inaccessible to JavaScript (HttpOnly attribute)."
+  },
+  "formFlagSecure": {
+    "message": "Beveiligd",
+    "description": "Checkbox label — cookie is only sent over HTTPS (Secure attribute)."
+  },
+  "formCancel": {
+    "message": "Annuleren",
+    "description": "Button — discard changes and close the edit/add form."
+  },
+  "formSave": {
+    "message": "Opslaan",
+    "description": "Button — save the cookie in the edit/add form."
+  },
+
+  "menuAddNew": {
+    "message": "Nieuwe cookie toevoegen",
+    "description": "Context menu item — open the form to add a new cookie."
+  },
+  "menuEdit": {
+    "message": "Cookie bewerken",
+    "description": "Context menu item — edit the single cookie that was right-clicked."
+  },
+  "menuRefresh": {
+    "message": "Vernieuwen",
+    "description": "Context menu item — reload the cookie list from the browser."
+  },
+  "menuDelete": {
+    "message": "Cookie verwijderen",
+    "description": "Context menu item — delete the single cookie that was right-clicked."
+  },
+  "menuDeleteSelected": {
+    "message": "Selectie verwijderen ($COUNT$)",
+    "description": "Context menu item shown when multiple cookies are selected. $COUNT$ is the number of selected cookies.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "menuDeleteAll": {
+    "message": "Alle cookies verwijderen",
+    "description": "Context menu item — delete every cookie currently shown."
+  },
+  "menuExportSelected": {
+    "message": "Selectie exporteren ($COUNT$)",
+    "description": "Context menu item shown when one or more cookies are selected. $COUNT$ is the number of selected cookies.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "menuExportAll": {
+    "message": "Alle cookies exporteren",
+    "description": "Context menu item — export every cookie currently shown to a JSON file."
+  },
+  "menuImport": {
+    "message": "Cookies importeren",
+    "description": "Context menu item — import cookies from a JSON file."
+  },
+
+  "settingsTitle": {
+    "message": "Instellingen",
+    "description": "Tooltip and accessible label for the gear icon that opens the settings popover."
+  },
+  "settingsShowCopyIcons": {
+    "message": "Pictogrammen voor kopiëren naar klembord weergeven",
+    "description": "Settings checkbox — toggle visibility of the small copy icons next to cookie name/value cells."
+  },
+  "settingsShowFilterBar": {
+    "message": "Filterbalk weergeven",
+    "description": "Settings checkbox — toggle visibility of the filter input at the top of the panel."
+  },
+  "settingsFilterBy": {
+    "message": "Filteren op",
+    "description": "Settings label preceding a dropdown that selects which field the filter bar matches against."
+  },
+  "settingsFilterByName": {
+    "message": "Naam",
+    "description": "Filter-by dropdown option — match against cookie name only."
+  },
+  "settingsFilterByValue": {
+    "message": "Waarde",
+    "description": "Filter-by dropdown option — match against cookie value only."
+  },
+  "settingsFilterByNameValue": {
+    "message": "Naam of waarde",
+    "description": "Filter-by dropdown option — match against either cookie name or value."
+  },
+
+  "filterPlaceholderName": {
+    "message": "Filteren op naam",
+    "description": "Placeholder text in the filter input when filtering by name."
+  },
+  "filterPlaceholderValue": {
+    "message": "Filteren op waarde",
+    "description": "Placeholder text in the filter input when filtering by value."
+  },
+  "filterPlaceholderNameValue": {
+    "message": "Filteren op naam of waarde",
+    "description": "Placeholder text in the filter input when filtering by either name or value."
+  },
+
+  "footerTotalCookies": {
+    "message": "Totaal aantal cookies:",
+    "description": "Footer label preceding the total cookie count number."
+  },
+  "footerSelected": {
+    "message": "Geselecteerd:",
+    "description": "Footer label preceding the count of currently selected cookies (only shown when 2+ are selected)."
+  },
+
+  "rowSession": {
+    "message": "Sessie",
+    "description": "Cell text in the Expires column for cookies that expire when the browser session ends."
+  },
+  "rowTrue": {
+    "message": "Ja",
+    "description": "Cell text in the HTTP-Only and Secure columns when the flag is set."
+  },
+  "rowCopy": {
+    "message": "Kopiëren",
+    "description": "Tooltip on the small copy-to-clipboard icon in cookie name/value cells."
+  },
+
+  "importInvalidJson": {
+    "message": "Cookies importeren mislukt: $REASON$",
+    "description": "Alert shown when the imported file is not valid JSON. $REASON$ is the parser's error message.",
+    "placeholders": {
+      "reason": { "content": "$1", "example": "Unexpected token } in JSON at position 42" }
+    }
+  },
+  "importSchemaFailed": {
+    "message": "Cookies importeren mislukt:\n$DETAILS$",
+    "description": "Alert shown when the imported JSON does not match the expected cookie schema. $DETAILS$ is a multi-line summary of validation issues.",
+    "placeholders": {
+      "details": { "content": "$1", "example": "0.name: Required\n1.domain: Invalid type" }
+    }
+  },
+  "importMoreIssues": {
+    "message": "\n…en nog $COUNT$",
+    "description": "Suffix appended to the schema-failure alert when more than 3 validation issues exist. $COUNT$ is the number of additional issues not shown.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "importConfirm": {
+    "message": "$COUNT$ cookie(s) importeren? Bestaande cookies met dezelfde naam, hetzelfde domein en hetzelfde pad worden overschreven.",
+    "description": "Confirmation dialog shown before importing cookies. $COUNT$ is the number of cookies in the import file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  }
+}
