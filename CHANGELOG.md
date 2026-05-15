@@ -1,5 +1,9 @@
 # Cookies Tab in DevTools Changelog
 
+### Master
+
+- Fixed European Portuguese translation not appearing in the Chrome Web Store listing by renaming the `_locales/pt` folder to `_locales/pt_PT`, the locale code Chrome recognizes.
+
 ### Release 3.2.0
 
 - Localize the extension via `chrome.i18n`. All panel UI strings and the manifest `name` / `short_name` / `description` now resolve through `_locales/<lang>/messages.json`, so the Chrome Web Store listing localizes alongside the UI and adding a new language is a drop-in JSON file with no code changes.
