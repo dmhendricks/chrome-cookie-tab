@@ -40,12 +40,21 @@ Load the extension in Chrome from `chrome://extensions` → **Load unpacked** �
 
 ## Translations
 
+- **The following translations were done by AI:** Spanish, French, German, Italian, Turkish, Polish, Romanian, Dutch, Czech, Portuguese
+- **The following translations done by humans:** Japanese
+
+If you spot an error or opportunities for improvement, please submit it.
+
+### Option 1 - Submit a Pull Request
+
 The extension uses Chrome's built-in [`chrome.i18n`](https://developer.chrome.com/docs/extensions/reference/api/i18n) API. Adding a new language is a single drop-in JSON file — no code changes.
 
-Initial translations were done by AI, so if you spot an error or improvement, please report it. To contribute a translation:
+To contribute a translation:
 
 1. Copy [`public/_locales/en/messages.json`](public/_locales/en/messages.json) to `public/_locales/<lang>/messages.json`, where `<lang>` is a [Chrome-supported locale code](https://developer.chrome.com/docs/extensions/reference/api/i18n#supported-locales) (`es`, `fr`, `de`, `ja`, `pt_BR`, …).
 2. Translate the `message` fields. Leave the keys, `description` fields, and `placeholders` blocks untouched — `description` is for translator context, and placeholders like `$COUNT$` are substituted at runtime by Chrome.
 3. Submit a pull request.
 
-Missing keys fall back to English automatically.
+### Option 2 - Submit an Issue
+
+If you don't know how or don't want to submit a pull request, you can simply make a copy of [messages.json](https://github.com/dmhendricks/chrome-cookies-tab/blob/main/public/_locales/en/messages.json) and translate (replace) all the `message` field values from English to the target language. **Do not** change any of the other strings (leave them in English). Once completed, post your translation in [Issues](https://github.com/dmhendricks/chrome-cookies-tab/issues) for review.
