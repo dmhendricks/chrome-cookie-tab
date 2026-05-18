@@ -1,0 +1,269 @@
+{
+  "extName": {
+    "message": "개발자 도구의 쿠키 탭",
+    "description": "Extension name shown in Chrome Web Store and chrome://extensions."
+  },
+  "extShortName": {
+    "message": "쿠키 탭",
+    "description": "Short extension name shown when space is constrained."
+  },
+  "extDescription": {
+    "message": "개발자 도구의 전용 탭에서 쿠키를 간편하게 관리",
+    "description": "Extension description shown in Chrome Web Store and chrome://extensions."
+  },
+  "panelTabTitle": {
+    "message": "쿠키",
+    "description": "Label of the extension's tab inside Chrome DevTools (sits next to Elements, Console, Network, etc.)."
+  },
+
+  "columnName": {
+    "message": "이름",
+    "description": "Column header — cookie name."
+  },
+  "columnValue": {
+    "message": "값",
+    "description": "Column header — cookie value."
+  },
+  "columnDomain": {
+    "message": "도메인",
+    "description": "Column header — cookie domain."
+  },
+  "columnSize": {
+    "message": "크기",
+    "description": "Column header — cookie size in bytes."
+  },
+  "columnPath": {
+    "message": "경로",
+    "description": "Column header — cookie path."
+  },
+  "columnExpires": {
+    "message": "만료",
+    "description": "Column header — cookie expiration date (rendered in the user's local timezone)."
+  },
+  "columnHttpOnly": {
+    "message": "HTTP",
+    "description": "Column header — abbreviated label for the HttpOnly flag."
+  },
+  "columnSecure": {
+    "message": "보안",
+    "description": "Column header — Secure flag."
+  },
+
+  "formAddTitle": {
+    "message": "쿠키 추가",
+    "description": "Header text shown above the form when adding a new cookie."
+  },
+  "formEditTitle": {
+    "message": "쿠키 수정",
+    "description": "Header text shown above the form when editing an existing cookie."
+  },
+  "formClose": {
+    "message": "닫기",
+    "description": "Tooltip and accessible label for the form's close (X) button."
+  },
+  "formName": {
+    "message": "이름",
+    "description": "Label for the cookie name input in the edit/add form."
+  },
+  "formValue": {
+    "message": "값",
+    "description": "Label for the cookie value input in the edit/add form."
+  },
+  "formDomain": {
+    "message": "도메인",
+    "description": "Label for the cookie domain input in the edit/add form."
+  },
+  "formPath": {
+    "message": "경로",
+    "description": "Label for the cookie path input in the edit/add form."
+  },
+  "formExpires": {
+    "message": "만료",
+    "description": "Label for the cookie expiration date input in the edit/add form."
+  },
+  "formFlagSession": {
+    "message": "세션",
+    "description": "Checkbox label — marks the cookie as a session cookie (deleted when browser closes)."
+  },
+  "formFlagHostOnly": {
+    "message": "호스트 전용",
+    "description": "Checkbox label — restricts cookie to the exact host, no subdomains."
+  },
+  "formFlagHttpOnly": {
+    "message": "HTTP 전용",
+    "description": "Checkbox label — cookie is inaccessible to JavaScript (HttpOnly attribute)."
+  },
+  "formFlagSecure": {
+    "message": "보안",
+    "description": "Checkbox label — cookie is only sent over HTTPS (Secure attribute)."
+  },
+  "formCancel": {
+    "message": "취소",
+    "description": "Button — discard changes and close the edit/add form."
+  },
+  "formSave": {
+    "message": "저장",
+    "description": "Button — save the cookie in the edit/add form."
+  },
+  "formExpirationCapped": {
+    "message": "사용 중인 브라우저는 쿠키 수명을 최대 400일로 제한합니다. 만료일은 $DATE$로 설정됩니다.",
+    "description": "Alert shown when the user picks an expiration more than 400 days in the future. Chrome (per RFC 6265bis) clamps the value, so we tell the user the date that will actually be stored. $DATE$ is the localized capped date.",
+    "placeholders": {
+      "date": { "content": "$1", "example": "Jun 11, 2027, 14:30:00" }
+    }
+  },
+
+  "menuAddNew": {
+    "message": "새 쿠키 추가",
+    "description": "Context menu item — open the form to add a new cookie."
+  },
+  "menuEdit": {
+    "message": "쿠키 수정",
+    "description": "Context menu item — edit the single cookie that was right-clicked."
+  },
+  "menuRefresh": {
+    "message": "새로고침",
+    "description": "Context menu item — reload the cookie list from the browser."
+  },
+  "menuDelete": {
+    "message": "쿠키 삭제",
+    "description": "Context menu item — delete the single cookie that was right-clicked."
+  },
+  "menuDeleteSelected": {
+    "message": "선택 항목 삭제 ($COUNT$)",
+    "description": "Context menu item shown when multiple cookies are selected. $COUNT$ is the number of selected cookies.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "menuDeleteAll": {
+    "message": "모든 쿠키 삭제",
+    "description": "Context menu item — delete every cookie currently shown."
+  },
+  "menuExport": {
+    "message": "쿠키 내보내기",
+    "description": "Context menu item — export the single cookie that was right-clicked."
+  },
+  "menuExportSelected": {
+    "message": "선택 항목 내보내기 ($COUNT$)",
+    "description": "Context menu item shown when multiple cookies are selected. $COUNT$ is the number of selected cookies.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
+  "menuExportAll": {
+    "message": "모든 쿠키 내보내기",
+    "description": "Context menu item — export every cookie currently shown to a JSON file."
+  },
+  "menuImport": {
+    "message": "쿠키 가져오기",
+    "description": "Context menu item — import cookies from a JSON file."
+  },
+  "cookiesExported": {
+    "message": "쿠키 $COUNT$개 내보내기 완료",
+    "description": "Toast shown after the user exports cookies to a JSON file. $COUNT$ is the number of cookies written to the file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  },
+  "cookiesImported": {
+    "message": "쿠키 $COUNT$개 가져오기 완료",
+    "description": "Toast shown after the user imports cookies from a JSON file. $COUNT$ is the number of cookies read from the file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  },
+
+  "settingsTitle": {
+    "message": "설정",
+    "description": "Tooltip and accessible label for the gear icon that opens the settings popover."
+  },
+  "settingsShowCopyIcons": {
+    "message": "클립보드 복사 아이콘 표시",
+    "description": "Settings checkbox — toggle visibility of the small copy icons next to cookie name/value cells."
+  },
+  "settingsShowFilterBar": {
+    "message": "필터 바 표시",
+    "description": "Settings checkbox — toggle visibility of the filter input at the top of the panel."
+  },
+  "settingsFilterBy": {
+    "message": "필터 기준",
+    "description": "Settings label preceding a dropdown that selects which field the filter bar matches against."
+  },
+  "settingsFilterByName": {
+    "message": "이름",
+    "description": "Filter-by dropdown option — match against cookie name only."
+  },
+  "settingsFilterByValue": {
+    "message": "값",
+    "description": "Filter-by dropdown option — match against cookie value only."
+  },
+  "settingsFilterByNameValue": {
+    "message": "이름 또는 값",
+    "description": "Filter-by dropdown option — match against either cookie name or value."
+  },
+
+  "filterPlaceholderName": {
+    "message": "이름으로 필터링",
+    "description": "Placeholder text in the filter input when filtering by name."
+  },
+  "filterPlaceholderValue": {
+    "message": "값으로 필터링",
+    "description": "Placeholder text in the filter input when filtering by value."
+  },
+  "filterPlaceholderNameValue": {
+    "message": "이름 또는 값으로 필터링",
+    "description": "Placeholder text in the filter input when filtering by either name or value."
+  },
+
+  "footerTotalCookies": {
+    "message": "전체 쿠키:",
+    "description": "Footer label preceding the total cookie count number."
+  },
+  "footerSelected": {
+    "message": "선택됨:",
+    "description": "Footer label preceding the count of currently selected cookies (only shown when 2+ are selected)."
+  },
+
+  "rowSession": {
+    "message": "세션",
+    "description": "Cell text in the Expires column for cookies that expire when the browser session ends."
+  },
+  "rowTrue": {
+    "message": "참",
+    "description": "Cell text in the HTTP-Only and Secure columns when the flag is set."
+  },
+  "rowCopy": {
+    "message": "복사",
+    "description": "Tooltip on the small copy-to-clipboard icon in cookie name/value cells."
+  },
+
+  "importInvalidJson": {
+    "message": "쿠키 가져오기 실패: $REASON$",
+    "description": "Alert shown when the imported file is not valid JSON. $REASON$ is the parser's error message.",
+    "placeholders": {
+      "reason": { "content": "$1", "example": "Unexpected token } in JSON at position 42" }
+    }
+  },
+  "importSchemaFailed": {
+    "message": "쿠키 가져오기 실패:\n$DETAILS$",
+    "description": "Alert shown when the imported JSON does not match the expected cookie schema. $DETAILS$ is a multi-line summary of validation issues.",
+    "placeholders": {
+      "details": { "content": "$1", "example": "0.name: Required\n1.domain: Invalid type" }
+    }
+  },
+  "importMoreIssues": {
+    "message": "\n…외 $COUNT$개",
+    "description": "Suffix appended to the schema-failure alert when more than 3 validation issues exist. $COUNT$ is the number of additional issues not shown.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "importConfirm": {
+    "message": "$COUNT$개의 쿠키를 가져오시겠습니까? 이름, 도메인, 경로가 같은 기존 쿠키는 덮어쓰기됩니다.",
+    "description": "Confirmation dialog shown before importing cookies. $COUNT$ is the number of cookies in the import file.",
+    "placeholders": {
+      "count": { "content": "$1", "example": "12" }
+    }
+  }
+}

@@ -40,8 +40,8 @@ Load the extension in Chrome from `chrome://extensions` â†’ **Load unpacked** â†
 
 ## Translations
 
-- **The following translations were done by AI:** Spanish, French, German, Italian, Turkish, Polish, Romanian, Dutch, Czech, Portuguese
-- **The following translations done by humans:** Japanese
+- **Translations were done by AI:** Spanish, French, German, Italian, Turkish, Polish, Romanian, Dutch, Czech, Portuguese
+- **Translations done by humans:** Korean, Japanese
 
 If you spot an error or opportunities for improvement, please submit it.
 
